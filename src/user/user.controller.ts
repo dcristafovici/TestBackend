@@ -1,5 +1,4 @@
-import { Controller, Get, Post } from '@nestjs/common';
-import { UserRegisterModel } from './user.dto';
+import { Controller, Get, Post, Req } from '@nestjs/common';
 import { User } from './user.entity';
 import { UserService } from './user.service';
 
@@ -12,8 +11,8 @@ export class UserController {
     return this.userService.getAll();
   }
 
-  @Post('/create')
-  async registerUser(data: UserRegisterModel): Promise<User> {
-    return this.userService.register(data);
+  @Post('/register')
+  async registerUser(@Req() req): Promise<User> {
+    return this.userService.register(req.body);
   }
 }

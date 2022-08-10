@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import { IsNotEmpty, IsEmail } from 'class-validator';
 
-@Entity({ name: 'USER' })
+@Entity({ name: 'user' })
 export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -27,14 +27,6 @@ export class User {
   @Column()
   @IsNotEmpty()
   lastName: string;
-
-  @Column()
-  @IsNotEmpty()
-  location: string;
-
-  @Column()
-  @IsNotEmpty()
-  position: string;
 
   @UpdateDateColumn({ type: 'timestamptz' })
   updated_at: Date;

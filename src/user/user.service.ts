@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
 import { UserRegisterModel } from './user.dto';
 import { User } from './user.entity';
@@ -13,10 +13,11 @@ export class UserService {
   ) {}
 
   async register(data: UserRegisterModel): Promise<User> {
-    const { email, password: unencryptedPassword } = data;
+    const { password: unencryptedPassword, ...information } = data;
+    const { email } = information;
 
     const emailExists = await this.userRepository.findBy({ email });
-    if (emailExists) {
+    if (emailExists.length) {
       throw new HttpException(
         {
           status: HttpStatus.CONFLICT,
@@ -28,7 +29,7 @@ export class UserService {
 
     const password = await bcrypt.hash(unencryptedPassword, 10);
 
-    return this.userRepository.save({ email, password, ...data });
+    return this.userRepository.save({ ...information, password });
   }
 
   getAll(): Promise<User[]> {

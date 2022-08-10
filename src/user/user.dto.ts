@@ -3,8 +3,6 @@ export interface UserRegisterModel {
   password: string;
   firstName: string;
   lastName: string;
-  location: string;
-  position: string;
 }
 
 export interface UserLoginModel {
