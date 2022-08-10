@@ -12,12 +12,22 @@ export class UserController {
   }
 
   @Post('/login')
-  async login(@Req() req): Promise<User> {
+  async login(@Req() req) {
     return this.userService.login(req.body);
   }
 
   @Post('/register')
   async registerUser(@Req() req): Promise<User> {
     return this.userService.register(req.body);
+  }
+
+  @Post('/verifyToken')
+  async verify(@Req() req) {
+    return this.userService.verifyToken(req.body);
+  }
+
+  @Post('/verifyRefreshToken')
+  async verifyRefresh(@Req() req) {
+    return this.userService.verifyRefreshToken(req.body);
   }
 }
